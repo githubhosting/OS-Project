@@ -7,10 +7,10 @@ This Bash script is designed to extract a specific range of lines from a given f
 1. Executing the script by running the following command:
 
 ```bash
-./extract_lines.sh <filename> <start_line> <end_line>
+bash display_lines.sh <filename> <start_line> <end_line>
 ```
 
-Replace `<filename>`, `<start_line>`, and `<end_line>` with the appropriate values. Here's a brief explanation of each argument:
+Here's a brief explanation of each argument:
 
 - `<filename>`: The name of the file from which lines will be extracted.
 - `<start_line>`: The line number from which the extraction should start (inclusive).
@@ -42,7 +42,7 @@ Line 5: Sparks of Artificial General Intelligence is a paper published in 2023 b
 To extract lines 2 to 4 from `file.txt`, we would run:
 
 ```bash
-./display_lines.sh file.txt 2 4
+bash display_lines.sh file.txt 2 4
 ```
 
 The output will be:
@@ -63,7 +63,7 @@ Line 4: DreamBooth is a tool for generating text that is similar to the text in 
 ```bash
 #!/bin/bash
 ```
-This line is called the shebang line. It specifies the interpreter that should be used to execute the script. In this case, we are using Bash as the interpreter.To interpret and run the commands within the script.
+This line is called the shebang line. It specifies the interpreter that should be used to execute the script. In this case, we are using Bash as the interpreter.To interpret and run the commands within the script. This indicates that the script should be interpreted using the Bash shell.
 
 ```bash
 if [[ $# -lt 3 ]]; then
