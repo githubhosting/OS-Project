@@ -63,7 +63,7 @@ Line 4: DreamBooth is a tool for generating text that is similar to the text in 
 ```bash
 #!/bin/bash
 ```
-This line is called the shebang line. It specifies the interpreter that should be used to execute the script. In this case, we are using Bash as the interpreter.
+This line is called the shebang line. It specifies the interpreter that should be used to execute the script. In this case, we are using Bash as the interpreter.To interpret and run the commands within the script.
 
 ```bash
 if [[ $# -lt 3 ]]; then
@@ -71,6 +71,7 @@ if [[ $# -lt 3 ]]; then
     exit 1
 fi
 ```
+This is a conditional statement in a Unix shell script.
 This `if` statement checks the number of command-line arguments passed to the script using `$#`. If there are less than three arguments (filename, start_line, and end_line), it displays a usage message indicating how to use the script and exits with an exit code of 1, indicating an error.
 
 ```bash
@@ -105,11 +106,20 @@ fi
 This `if` statement checks if the specified file (`$filename`) exists and is a regular file using the `-f` test. If the file does not exist or is not a regular file, it prints an error message and exits with an exit code of 1.
 
 ```bash
-awk -v start="$start_line" -v end="$end_line" 'NR >= start && NR <= end' "$filename"
+sed -n "${start_line},${end_line}p" "$filename"
 ```
-This line uses the `awk` command-line utility to read the contents of the file (`$filename`) and print the lines between `start_line` and `end_line` (inclusive). 
+Finally I used the `sed` Unix shell command. The `sed` command modifies lines from the specified *File* parameter according to an edit script and writes them to standard output. The sed command includes many features for selecting lines to be modified and making changes only to the selected lines. It can be used to perform a variety of operations on text, including searching, replacing, inserting, displaying and deleting. Here, we are using it to print a range of lines from a file and deleting the lines containing specific word.
 
-- `-v start="$start_line"` and `-v end="$end_line"` are used to pass the values of `start_line` and `end_line` as variables to `awk`.
-- `'NR >= start && NR <= end'` is the `awk` code that filters the lines. `NR` represents the current line number being processed by `awk`. So, this code checks if the current line number (`NR`) is greater than or equal to `start` and less than or equal to `end`, and if it is true, it prints the line.
+1. `sed`: The command to invoke the stream editor.
 
-The resulting lines are displayed on the console, showing the content of the specified file between the given line numbers.
+2. `-n`: This option tells `sed` to suppress automatic printing of pattern space (lines). By default, `sed` prints each line after processing it, but with `-n`, it will only print explicitly specified lines.
+
+3. `"${start_line},${end_line}p"`: This is the main operation provided to `sed`. This allows the variables `start_line` and `end_line` to be expanded. 
+
+   - `${start_line},${end_line}`: This is a range of lines to process. These variables are declared and allocated the values using the command-line arguments.
+  
+   - `p`: This is the `sed` command that tells it to print the lines in the specified range.
+
+4. `"$filename"`: This is the file from which `sed` reads the input.
+
+So `sed` command will read the content of the file specified by `$filename` and print only the lines that fall within the range specified by `start_line` and `end_line`. All other lines will be suppressed from the output due to the `-n` option. If `start_line` is 1 and `end_line` is 10, it will print lines 1 to 10 from the file.
